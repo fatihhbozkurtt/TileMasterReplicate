@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5780b16fbcfd51241bf03c0c00c5f9fd, type: 3}
+  m_Name: IconData
+  m_EditorClassIdentifier: 
+  iconDataWrappers:
+  - iconEnum: 0
+    iconSprite: {fileID: 21300000, guid: ece6b62ca0591d842bb1e35eff93133f, type: 3}
+  - iconEnum: 1
+    iconSprite: {fileID: 21300000, guid: 89007a75e1f2cfe498ead6371a3e3834, type: 3}
+  - iconEnum: 2
+    iconSprite: {fileID: 21300000, guid: 5002160384b978749b12930b9eb77bd6, type: 3}
+  - iconEnum: 3
+    iconSprite: {fileID: 21300000, guid: f4d2a3d547b38244fb6d0650272c59b3, type: 3}
+  - iconEnum: 4
+    iconSprite: {fileID: 21300000, guid: 1db8deb6eefd9d4429a5603d44fdf36f, type: 3}
+  - iconEnum: 5
+    iconSprite: {fileID: 21300000, guid: 4334370c8695e4d4394378873a2947ba, type: 3}
+  - iconEnum: 6
+    iconSprite: {fileID: 21300000, guid: 023bcfd7d6b235d469aecb94799c4e35, type: 3}
+  - iconEnum: 7
+    iconSprite: {fileID: 21300000, guid: c88f8e313db013540b451894dcc0a3b9, type: 3}
+  - iconEnum: 8
+    iconSprite: {fileID: 21300000, guid: 6a9e6a821f6c44c4cad051e2178ef8e4, type: 3}
+  - iconEnum: 9
+    iconSprite: {fileID: 21300000, guid: 2c0f4e170dbe1c94db731cb71ce550a8, type: 3}
