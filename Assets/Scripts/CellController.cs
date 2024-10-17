@@ -24,6 +24,9 @@ public class CellController : MonoBehaviour
     private void OnACellPicked(CellController pickedCell)
     {
         if (pickedCell == this) return;
+
+        if (upperCells.Contains(pickedCell))
+            upperCells.Remove(pickedCell);
         // refresh the neighbor cell list
     }
 
@@ -37,7 +40,7 @@ public class CellController : MonoBehaviour
         isOnCollection = true;
         gameObject.SetActive(false);
     }
-    
+
     private bool IsCellPickable()
     {
         return upperCells.Count == 0;
@@ -49,6 +52,7 @@ public class CellController : MonoBehaviour
     {
         GetComponentInChildren<TileController>().SetIconData(idw);
     }
+
     public void SetOccupied(GameObject tileObj)
     {
         tileObject = tileObj;

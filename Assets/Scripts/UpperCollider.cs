@@ -7,7 +7,7 @@ using UnityEngine;
 public class UpperCollider : MonoBehaviour
 {
     private CellController parentCell;
-    private List<CellController> upperCells = new();
+    [SerializeField] private List<CellController> upperCells = new();
 
     private IEnumerator Start()
     {
@@ -15,16 +15,14 @@ public class UpperCollider : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         parentCell.upperCells = upperCells;
-        Debug.Log("Cell count " + upperCells.Count);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.TryGetComponent(out CellController upperCell))
-        {
-            if (!upperCells.Contains(upperCell))
-                upperCells.Add(upperCell);
-        }
+        if (!other.transform.TryGetComponent(out CellController upperCell)) return;
+        if (upperCells.Contains(upperCell)) return;
+        if (parentCell != upperCell)
+            upperCells.Add(upperCell);
     }
 }
