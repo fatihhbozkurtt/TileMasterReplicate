@@ -14,12 +14,12 @@ public class GridManager : MonoSingleton<GridManager>
     {
         base.Awake();
         _iconDataList = iconSo.iconDataWrappers;
-        for (var i = 0; i < layers.Count; i++)
+        foreach (var l in layers)
         {
-            var l = layers[i];
             foreach (var c in l.cells)
             {
-                activeCells.Add(c);
+                if (!activeCells.Contains(c))
+                    activeCells.Add(c);
             }
         }
 
@@ -74,5 +74,4 @@ public class GridManager : MonoSingleton<GridManager>
             (list[k], list[n]) = (list[n], list[k]);
         }
     }
-
 }
