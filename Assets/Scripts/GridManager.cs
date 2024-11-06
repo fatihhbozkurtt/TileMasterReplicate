@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Data;
 using UnityEngine;
+using Data;
 
 public class GridManager : MonoSingleton<GridManager>
 {

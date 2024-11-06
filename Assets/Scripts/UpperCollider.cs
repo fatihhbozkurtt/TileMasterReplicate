@@ -1,20 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UpperCollider : MonoBehaviour
 {
-    private CellController parentCell;
+    private CellController _parentCell;
     [SerializeField] private List<CellController> upperCells = new();
 
     private IEnumerator Start()
     {
-        parentCell = transform.parent.GetComponent<CellController>();
+        _parentCell = transform.parent.GetComponent<CellController>();
 
         yield return new WaitForSeconds(1);
-        parentCell.upperCells = upperCells;
+        _parentCell.upperCells = upperCells;
         Destroy(gameObject);
     }
 
@@ -22,7 +20,7 @@ public class UpperCollider : MonoBehaviour
     {
         if (!other.transform.TryGetComponent(out CellController upperCell)) return;
         if (upperCells.Contains(upperCell)) return;
-        if (parentCell != upperCell)
+        if (_parentCell != upperCell)
             upperCells.Add(upperCell);
     }
 }
