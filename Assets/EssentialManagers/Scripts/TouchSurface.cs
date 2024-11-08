@@ -1,15 +1,29 @@
-using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Zenject;
 
-public class TouchSurface : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+namespace EssentialManagers.Scripts
 {
-    public void OnPointerDown(PointerEventData _)
+    public class TouchSurface : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        InputManager.instance.OnPointerDown();
-    }
+        public InputManager inputManager;
 
-    public void OnPointerUp(PointerEventData _)
-    {
-        InputManager.instance.OnPointerUp();
+        [Inject]
+        private void ZenjectSetup(InputManager im)
+        {
+            inputManager = im;
+        }
+
+        public void OnPointerDown(PointerEventData _)
+        {
+            Debug.Log("Pointer Down");
+            inputManager.OnPointerDown();
+        }
+
+        public void OnPointerUp(PointerEventData _)
+        {
+            Debug.Log("Pointer Up");
+            inputManager.OnPointerUp();
+        }
     }
 }

@@ -1,18 +1,20 @@
-using System.Reflection;
 using UnityEngine;
 
-public class InputManager : MonoSingleton<InputManager>
+namespace EssentialManagers.Scripts
 {
-    public event System.Action TouchStartEvent;
-    public event System.Action TouchEndEvent;
-
-    public void OnPointerDown()
+    public class InputManager : MonoBehaviour
     {
-        TouchStartEvent?.Invoke();
-    }
+        public event System.Action TouchStartEvent;
+        public event System.Action TouchEndEvent;
 
-    public void OnPointerUp()
-    {
-        TouchEndEvent?.Invoke();
+        public void OnPointerDown()
+        {
+            TouchStartEvent?.Invoke();
+        }
+
+        public void OnPointerUp()
+        {
+            TouchEndEvent?.Invoke();
+        }
     }
 }

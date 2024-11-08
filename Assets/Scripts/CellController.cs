@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Data;
+using EssentialManagers.Scripts;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CellController : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class CellController : MonoBehaviour
     [SerializeField] Vector2Int coordinates;
     public List<CellController> upperCells;
 
+    
     private void Start()
     {
         PickManager.instance.CellPickedEvent += OnACellPicked;
