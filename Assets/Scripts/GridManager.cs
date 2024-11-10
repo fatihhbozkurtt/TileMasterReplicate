@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Data;
 
-public class GridManager : MonoSingleton<GridManager>
+public class GridManager : MonoBehaviour
 {
     [Header("References")] public List<LayerController> layers;
     public IconSo iconSo;
@@ -10,9 +10,8 @@ public class GridManager : MonoSingleton<GridManager>
     private List<IconDataWrapper> _iconDataList; // 10 farklı iconData türü
 
 
-    protected override void Awake()
-    {
-        base.Awake();
+    private void Start()
+    { 
         _iconDataList = iconSo.iconDataWrappers;
         foreach (var l in layers)
         {

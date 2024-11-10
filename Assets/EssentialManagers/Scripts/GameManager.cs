@@ -1,96 +1,95 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoSingleton<GameManager>
+namespace EssentialManagers.Scripts
 {
-    public static readonly string lastPlayedStageKey = "n_lastPlayedStage";
-    public static readonly string randomizeStagesKey = "n_randomizeStages";
-    public static readonly string cumulativeStagePlayedKey = "n_cumulativeStages";
-
-    [HideInInspector] public bool isLevelActive = false;
-    [HideInInspector] public bool isLevelSuccessful = false;
-
-    public event System.Action LevelStartedEvent;
-    public event System.Action LevelEndedEvent; // fired regardless of fail or success
-    public event System.Action LevelSuccessEvent; // fired only on success
-    public event System.Action LevelFailedEvent; // fired only on fail
-    public event System.Action LevelAboutToChangeEvent; // fired just before next level load
-
-    protected override void Awake()
+    public class GameManager : MonoBehaviour
     {
-        base.Awake();
+        private static readonly string LastPlayedStageKey = "n_lastPlayedStage";
+        private static readonly string RandomizeStagesKey = "n_randomizeStages";
+        private static readonly string CumulativeStagePlayedKey = "n_cumulativeStages";
 
-        if (!PlayerPrefs.HasKey(cumulativeStagePlayedKey)) PlayerPrefs.SetInt(cumulativeStagePlayedKey, 1);
+        [HideInInspector] public bool isLevelActive = false;
+        [HideInInspector] public bool isLevelSuccessful = false;
 
-        Application.targetFrameRate = 999;
-        QualitySettings.vSyncCount = 0;
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        public event System.Action LevelStartedEvent;
+        public event System.Action LevelEndedEvent; // fired regardless of fail or success
+        public event System.Action LevelSuccessEvent; // fired only on success
+        public event System.Action LevelFailedEvent; // fired only on fail
+        public event System.Action LevelAboutToChangeEvent; // fired just before next level load
 
-    }
-
-    public void StartGame()
-    {
-        isLevelActive = true;
-        LevelStartedEvent?.Invoke();
-    }
-
-    public void EndGame(bool success)
-    {
-        isLevelActive = false;
-        isLevelSuccessful = success;
-
-        LevelEndedEvent?.Invoke();
-        if (success)
+        private void Awake()
         {
-            LevelSuccessEvent?.Invoke();
+            if (!PlayerPrefs.HasKey(CumulativeStagePlayedKey)) PlayerPrefs.SetInt(CumulativeStagePlayedKey, 1);
+
+            Application.targetFrameRate = 999;
+            QualitySettings.vSyncCount = 0;
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
         }
-        else
-        {
-            LevelFailedEvent?.Invoke();
 
+        public void StartGame()
+        {
+            isLevelActive = true;
+            LevelStartedEvent?.Invoke();
         }
-    }
 
-    public void NextStage()
-    {
-        //Analytics.LevelPassed(PlayerPrefs.GetInt(cumulativeStagePlayedKey));
-        PlayerPrefs.SetInt(cumulativeStagePlayedKey, PlayerPrefs.GetInt(cumulativeStagePlayedKey, 1) + 1);
-
-        int targetScene;
-
-        if (PlayerPrefs.GetInt(randomizeStagesKey, 0) == 0)
+        public void EndGame(bool success)
         {
-            targetScene = SceneManager.GetActiveScene().buildIndex + 1;
-            if (targetScene == SceneManager.sceneCountInBuildSettings)
+            isLevelActive = false;
+            isLevelSuccessful = success;
+
+            LevelEndedEvent?.Invoke();
+            if (success)
             {
-                targetScene = RandomStage();
-                PlayerPrefs.SetInt(randomizeStagesKey, 1);
+                LevelSuccessEvent?.Invoke();
+            }
+            else
+            {
+                LevelFailedEvent?.Invoke();
             }
         }
 
-        else
+        public void NextStage()
         {
-            targetScene = RandomStage();
+            //Analytics.LevelPassed(PlayerPrefs.GetInt(cumulativeStagePlayedKey));
+            PlayerPrefs.SetInt(CumulativeStagePlayedKey, PlayerPrefs.GetInt(CumulativeStagePlayedKey, 1) + 1);
+
+            int targetScene;
+
+            if (PlayerPrefs.GetInt(RandomizeStagesKey, 0) == 0)
+            {
+                targetScene = SceneManager.GetActiveScene().buildIndex + 1;
+                if (targetScene == SceneManager.sceneCountInBuildSettings)
+                {
+                    targetScene = RandomStage();
+                    PlayerPrefs.SetInt(RandomizeStagesKey, 1);
+                }
+            }
+
+            else
+            {
+                targetScene = RandomStage();
+            }
+
+            PlayerPrefs.SetInt(LastPlayedStageKey, targetScene);
+            LevelAboutToChangeEvent?.Invoke();
+            SceneManager.LoadScene(targetScene);
         }
 
-        PlayerPrefs.SetInt(lastPlayedStageKey, targetScene);
-        LevelAboutToChangeEvent?.Invoke();
-        SceneManager.LoadScene(targetScene);
-    }
+        public void RestartStage()
+        {
+            LevelAboutToChangeEvent?.Invoke();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
-    public void RestartStage()
-    {
-        LevelAboutToChangeEvent?.Invoke();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+        private int RandomStage()
+        {
+            return Random.Range(2, SceneManager.sceneCountInBuildSettings);
+        }
 
-    private int RandomStage()
-    {
-        return Random.Range(2, SceneManager.sceneCountInBuildSettings);
-    }
-
-    public int GetTotalStagePlayed()
-    {
-        return PlayerPrefs.GetInt(cumulativeStagePlayedKey, 1);
+        public int GetTotalStagePlayed()
+        {
+            return PlayerPrefs.GetInt(CumulativeStagePlayedKey, 1);
+        }
     }
 }

@@ -1,23 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
-public class GameStarter : MonoBehaviour, IPointerDownHandler
+namespace EssentialManagers.Scripts
 {
-    bool ready = false;
-
-    private void Start()
+    public class GameStarter : MonoBehaviour, IPointerDownHandler
     {
-        ready = true;
-    }
+        bool ready = false;
+        [Inject] private GameManager _gameManager;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (ready)
+        private void Start()
         {
-            ready = false;
-            GameManager.instance.StartGame();
+            ready = true;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (ready)
+            {
+                ready = false;
+                _gameManager.StartGame();
+            }
         }
     }
 }

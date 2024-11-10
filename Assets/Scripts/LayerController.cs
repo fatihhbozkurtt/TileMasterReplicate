@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LayerController : MonoBehaviour
@@ -7,6 +8,8 @@ public class LayerController : MonoBehaviour
 
     private void Awake()
     {
+        cells = GetComponentsInChildren<CellController>().ToList();
+        
         for (int i = 0; i < cells.Count; i++)
         {
             if (cells[i].gameObject.activeInHierarchy) continue;

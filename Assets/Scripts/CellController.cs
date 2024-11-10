@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Data;
 using EssentialManagers.Scripts;
 using UnityEngine;
+using Zenject;
 
 public class CellController : MonoBehaviour
 {
@@ -14,8 +15,14 @@ public class CellController : MonoBehaviour
     public bool isOccupied;
     [SerializeField] Vector2Int coordinates;
     public List<CellController> upperCells;
-
+    private GameManager _gameManager;
     
+    [Inject]
+    private void ZenjectSetUp(GameManager gm)
+    {
+        _gameManager = gm;
+    }
+
     private void Start()
     {
         PickManager.instance.CellPickedEvent += OnACellPicked;
@@ -32,7 +39,7 @@ public class CellController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameManager.instance.isLevelActive) return;
+        if (!_gameManager.isLevelActive) return;
         if (isOnCollection) return;
         if (!IsCellPickable()) return;
 

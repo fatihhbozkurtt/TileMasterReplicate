@@ -9,6 +9,9 @@ namespace DI
         public override void InstallBindings()
         {
             Container.Bind<InputManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<CanvasManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<GridManager>().FromComponentInHierarchy().AsSingle();
         }
     }
 }
