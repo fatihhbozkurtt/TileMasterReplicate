@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using EssentialManagers.CustomPackages.SlotSystem.Scripts;
 using EssentialManagers.Scripts;
 using UnityEngine;
 using Zenject;
@@ -16,6 +17,7 @@ public class CellController : MonoBehaviour
     [SerializeField] Vector2Int coordinates;
     public List<CellController> upperCells;
     private GameManager _gameManager;
+    private SlotUser _slotUser;
     
     [Inject]
     private void ZenjectSetUp(GameManager gm)
@@ -26,6 +28,7 @@ public class CellController : MonoBehaviour
     private void Start()
     {
         PickManager.instance.CellPickedEvent += OnACellPicked;
+        _slotUser = GetComponentInChildren<SlotUser>();
     }
 
     private void OnACellPicked(CellController pickedCell)
@@ -45,7 +48,7 @@ public class CellController : MonoBehaviour
 
         PickManager.instance.TriggerCellPickedEvent(this);
         isOnCollection = true;
-        gameObject.SetActive(false);
+        _slotUser.OnPicked();
     }
 
     private bool IsCellPickable()

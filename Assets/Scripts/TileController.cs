@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Data;
+using EssentialManagers.CustomPackages.SlotSystem.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,5 +11,6 @@ public class TileController : MonoBehaviour
     {
         data = idw;
         GetComponentInChildren<Image>().sprite = data.iconSprite;
+        GetComponent<SlotUser>().SetEnum(data.iconEnum);
     }
 }

@@ -10,6 +10,7 @@ namespace DI
         {
             Container.Bind<InputManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CanvasManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<CameraManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GridManager>().FromComponentInHierarchy().AsSingle();
         }

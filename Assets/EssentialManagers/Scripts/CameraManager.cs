@@ -4,11 +4,14 @@ using Zenject;
 
 namespace EssentialManagers.Scripts
 {
-    public class CameraManager : MonoSingleton<CameraManager>
+    public class CameraManager : MonoBehaviour
     {
         public enum CamType
         {
-            Menu, Game, Win, Fail
+            Menu,
+            Game,
+            Win,
+            Fail
         }
 
         public Camera mainCam;
@@ -20,10 +23,9 @@ namespace EssentialManagers.Scripts
 
         CinemachineVirtualCamera[] vcamArr;
         [Inject] private GameManager _gameManager;
-        protected override void Awake()
-        {
-            base.Awake();
 
+        protected void Awake()
+        {
             vcamArr = new CinemachineVirtualCamera[System.Enum.GetNames(typeof(CamType)).Length];
 
             vcamArr[(int)CamType.Menu] = menuCam;
@@ -63,6 +65,5 @@ namespace EssentialManagers.Scripts
         {
             return vcamArr[(int)camType];
         }
-
     }
 }
